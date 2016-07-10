@@ -6,13 +6,29 @@ class TweetBox extends React.Component {
     super(props, context);
 
     this.handleChange = this.handleChange.bind(this);
+    this.togglePhoto = this.togglePhoto.bind(this);
+    this.remainingCharacters = this.remainingCharacters.bind(this);
+
     this.state = {
-      text: ''
+      text: '',
+      photoAdded: false
     };
   };
 
   handleChange(event) {
     this.setState({ text: event.target.value });
+  };
+
+  togglePhoto() {
+    this.setState({ photoAdded: !this.state.photoAdded });
+  };
+
+  remainingCharacters() {
+    if (this.state.photoAdded) {
+      return 140 - 23 - this.state.text.length;
+    } else {
+      return 140 - this.state.text.length;
+    }
   };
 
   render() {
@@ -22,9 +38,13 @@ class TweetBox extends React.Component {
                   onChange={this.handleChange}>
         </textarea>
         <br/>
-        <span>{140 - this.state.text.length}</span>
+        <span>{this.remainingCharacters()}</span>
         <button className="btn btn-primary pull-right"
-                disabled={this.state.text.length === 0}>twt</button>
+                disabled={this.remainingCharacters() === 140 || this.remainingCharacters() < 0}>twt</button>
+        <button className="btn btn-default pull-right"
+          onClick={this.togglePhoto}>
+          {this.state.photoAdded ? 'Photo added' : 'add photo'}
+        </button>
       </div>
     )
   }
