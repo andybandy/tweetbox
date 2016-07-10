@@ -8,6 +8,7 @@ class TweetBox extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.togglePhoto = this.togglePhoto.bind(this);
     this.remainingCharacters = this.remainingCharacters.bind(this);
+    this.overflowAlert = this.overflowAlert.bind(this);
 
     this.state = {
       text: '',
@@ -31,9 +32,27 @@ class TweetBox extends React.Component {
     }
   };
 
+  overflowAlert() {
+    if (this.remainingCharacters() < 0) {
+      let beforeOverflowText = this.state.text.substring(140 - 10, 140);
+      let overflowText = this.state.text.substring(140);
+
+      return (
+        <div className="alert alert-warning">
+          <strong>Oops! The text is too long:</strong>
+          &nbsp;...{beforeOverflowText}
+          <strong className="bg-danger">{overflowText}</strong>
+        </div>
+      );
+    } else {
+      return '';
+    }
+  };
+
   render() {
     return (
       <div className="well clearfix">
+        { this.overflowAlert() }
         <textarea className="form-control"
                   onChange={this.handleChange}>
         </textarea>
