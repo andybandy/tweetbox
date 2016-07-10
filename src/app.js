@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDom from 'react-dom';
+
+const propTypes = {
+  maxLength: PropTypes.number.isRequired,
+  photoSize: PropTypes.number.isRequired,
+};
 
 class TweetBox extends React.Component {
   constructor(props, context) {
@@ -26,16 +31,21 @@ class TweetBox extends React.Component {
 
   remainingCharacters() {
     if (this.state.photoAdded) {
-      return 140 - 23 - this.state.text.length;
+      return this.props.maxLength - 23 - this.state.text.length;
     } else {
-      return 140 - this.state.text.length;
+      return this.props.maxLength - this.state.text.length;
     }
   };
 
   overflowAlert() {
     if (this.remainingCharacters() < 0) {
-      let beforeOverflowText = this.state.text.substring(140 - 10, 140);
-      let overflowText = this.state.text.substring(140);
+      let maxLength = this.props.maxLength;
+      if (this.state.photoAdded) {
+        maxLength -= this.props.photoSize;
+      }
+
+      const beforeOverflowText = this.state.text.substring(maxLength - 10, maxLength);
+      const overflowText = this.state.text.substring(maxLength);
 
       return (
         <div className="alert alert-warning">
@@ -61,7 +71,7 @@ class TweetBox extends React.Component {
           {this.remainingCharacters()}
         </span>
         <button className="btn btn-primary pull-right"
-                disabled={this.remainingCharacters() === 140 || this.remainingCharacters() < 0}>twt</button>
+                disabled={this.remainingCharacters() === this.props.maxLength || this.remainingCharacters() < 0}>twt</button>
         <button className="btn btn-default pull-right"
           onClick={this.togglePhoto}>
           {this.state.photoAdded ? 'Photo added' : 'add photo'}
@@ -72,6 +82,6 @@ class TweetBox extends React.Component {
 }
 
 ReactDom.render(
-  <TweetBox />,
+  <TweetBox maxLength={140} photoSize={23}/>,
   document.getElementById('container')
 );
