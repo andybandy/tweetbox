@@ -31,7 +31,7 @@ class TweetBox extends React.Component {
 
   remainingCharacters() {
     if (this.state.photoAdded) {
-      return this.props.maxLength - 23 - this.state.text.length;
+      return this.props.maxLength - this.props.photoSize - this.state.text.length;
     } else {
       return this.props.maxLength - this.state.text.length;
     }
