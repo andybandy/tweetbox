@@ -57,7 +57,9 @@ class TweetBox extends React.Component {
                   onChange={this.handleChange}>
         </textarea>
         <br/>
-        <span>{this.remainingCharacters()}</span>
+        <span className={ this.remainingCharacters() < 0 ? "text-danger" : "" }>
+          {this.remainingCharacters()}
+        </span>
         <button className="btn btn-primary pull-right"
                 disabled={this.remainingCharacters() === 140 || this.remainingCharacters() < 0}>twt</button>
         <button className="btn btn-default pull-right"
