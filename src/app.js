@@ -21,7 +21,7 @@ class TweetBox extends React.Component {
         <textarea className="form-control"
                   onChange={this.handleChange}>
         </textarea>
-        <br/>
+        <span>{this.state.text.length}</span>
         <button className="btn btn-primary pull-right"
                 disabled={this.state.text.length === 0}>twt</button>
       </div>
