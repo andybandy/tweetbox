@@ -1,4 +1,4 @@
-### React es6 boilerplate
+### React es6 test project TWEETBOX
 
 Start using:
 ```
@@ -10,3 +10,4 @@ Then connent to
 ```
 localhost:8080/webpack_dev_server
 ```
+
